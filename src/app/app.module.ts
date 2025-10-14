@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,7 +16,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    FullCalendarModule // Importe o módulo do FullCalendar aqui
+    FullCalendarModule, // Importe o módulo do FullCalendar aqui
+    IonicStorageModule.forRoot({name: "calentec"}),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
