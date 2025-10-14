@@ -1,13 +1,40 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>cadastro</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content> 
+  <section class="secaoForm">
+    <h1>Cadastre-se</h1>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">cadastro</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <form class="formulario">
+      <ion-input 
+        name="nome"
+        type="text"
+        label="Nome"
+        labelPlacement="floating"
+        required></ion-input>
+      
+      <ion-input 
+        name="senha"
+        type="password"
+        label="Senha"
+        labelPlacement="floating"
+        required></ion-input>
+
+        <ion-select 
+          name="tipoUsuario"
+          label="Tipo de usuário">
+          <ion-select-option> Funcionário </ion-select-option>
+          <ion-select-option> Aluno </ion-select-option>
+          <ion-select-option> Responsável </ion-select-option>
+        </ion-select>
+
+        <ion-input 
+        name="codigoUsuario"
+        type="text"
+        label="Código de usuário"
+        labelPlacement="floating"
+        required></ion-input>
+
+      <span>Já possui uma conta?<a href="/login"> Entre</a></span>
+
+      <ion-button href="/home">Cadastrar</ion-button>
+    </form>
+  </section>
 </ion-content>
