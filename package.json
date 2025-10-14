@@ -27,6 +27,8 @@
     "@fullcalendar/interaction": "^6.1.19",
     "@fullcalendar/timegrid": "^6.1.19",
     "@ionic/angular": "^8.0.0",
+    "@ionic/storage-angular": "^4.0.0",
+    "crypto-js": "^4.2.0",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
