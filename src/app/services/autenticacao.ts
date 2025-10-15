@@ -13,7 +13,7 @@ export class Autenticacao {
   //chave usada para criptgrafar senhas
   private readonly CHAVE_CRIPTOGRAFIA = "chave-secreta-calentec";
 
-  constructor(private storage: Storage) {}
+  constructor(private storage: Storage) { this.storage.create(); }
 
   //cadastrar usuário novo
   async cadastrar(usuario: Omit<Usuario, 'id'>): Promise<boolean>{
