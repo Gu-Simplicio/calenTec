@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Autenticacao } from 'src/app/services/autenticacao';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private autenticacao: Autenticacao
+  ) { }
 
   ngOnInit() {
   }
