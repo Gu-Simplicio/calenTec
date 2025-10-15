@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Usuario } from 'src/app/models/usuario';
+import { Autenticacao } from 'src/app/services/autenticacao';
 
 @Component({
   selector: 'app-perfil',
@@ -7,10 +10,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
+  usuario!: Usuario | null;
 
-  constructor() { }
+  constructor(
+    private autenticacao: Autenticacao,
+    private router: Router
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.usuario = await this.autenticacao.getUsuarioAtual();
+    console.log(this.usuario);
   }
 
+  sair(){
+    //desloga o usuário
+    this.autenticacao.logout();
+    //vai pro login
+    this.router.navigate(['/login']);
+  }
 }

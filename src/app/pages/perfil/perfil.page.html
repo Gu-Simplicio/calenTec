@@ -1,13 +1,22 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>perfil</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  @if(usuario){
+    <section>
+      <ion-item>
+        Nome: {{ usuario.nome }}
+      </ion-item>
+      @if(usuario.codigo){
+        <ion-item>
+          RM: {{ usuario.codigo }}
+        </ion-item>
+      }
+      <ion-item>
+        email: {{ usuario.email }}
+      </ion-item>
+      <ion-item>
+        tipo de usuário: {{ usuario.tipoUsuario }}
+      </ion-item>
+    </section>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">perfil</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-button (click)="sair()">Sair</ion-button>
+  }
 </ion-content>
