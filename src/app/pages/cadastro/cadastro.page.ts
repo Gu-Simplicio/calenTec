@@ -46,12 +46,12 @@ export class CadastroPage implements OnInit {
     if(!this.formularioCadastro.valid) throw new Error("Formulário incompleto!")
     
     //realiza o cadastro do usuário
-    try {
-      await this.autenticacao.cadastrar(this.usuario);
+    const usuarioCadastrado = await this.autenticacao.cadastrar(this.usuario);
 
+    if(usuarioCadastrado) {
       this.router.navigate(['/menu']);
-    }catch(erro){
-      console.error(`Erro ${erro}`);
+    } else {
+      throw new Error("Erro ao cadastrar usuário!");
     }
   }
 }
