@@ -88,7 +88,7 @@ export class Autenticacao {
   }
 
   //obtém os usuários
-  private async getUsuarioAtual(): Promise<Usuario | null>{
+  async getUsuarioAtual(): Promise<Usuario | null>{
     return await this.storage.get(this.CHAVE_USUARIO_LOGADO);
   }
   private async getUsuarios(): Promise<Usuario[]>{
