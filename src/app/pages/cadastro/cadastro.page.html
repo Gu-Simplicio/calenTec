@@ -2,9 +2,10 @@
   <section class="secaoForm">
     <h1>Cadastre-se</h1>
 
-    <form class="formulario">
+    <form class="formulario" #formularioCadastro="ngForm" (submit)="cadastrar()">
       <ion-input 
         name="nome"
+        [(ngModel)]="usuario.nome"
         type="text"
         label="Nome"
         labelPlacement="floating"
@@ -12,6 +13,7 @@
 
       <ion-input 
         name="email"
+        [(ngModel)]="usuario.email"
         type="email"
         label="E-mail"
         labelPlacement="floating"
@@ -19,6 +21,7 @@
 
       <ion-input 
         name="senha"
+        [(ngModel)]="usuario.senha"
         type="password"
         label="Senha"
         labelPlacement="floating"
@@ -26,22 +29,32 @@
 
         <ion-select 
           name="tipoUsuario"
-          label="Tipo de usuário">
-          <ion-select-option> Funcionário </ion-select-option>
-          <ion-select-option> Aluno </ion-select-option>
-          <ion-select-option> Responsável </ion-select-option>
+          [(ngModel)]="usuario.tipoUsuario"
+          label="Tipo de usuário"
+          (ionChange)="alteraTipo()"
+          required> 
+          <ion-select-option value="funcionário"> Funcionário </ion-select-option>
+          <ion-select-option value="aluno"> Aluno </ion-select-option>
+          <ion-select-option value="responsável"> Responsável </ion-select-option>
         </ion-select>
 
-        <ion-input 
-        name="codigoUsuario"
-        type="text"
-        label="Código de usuário"
-        labelPlacement="floating"
-        required></ion-input>
+        @if(mostrarCodigo){
+          <ion-input 
+            name="codigo"
+            [(ngModel)]="usuario.codigo"
+            type="text"
+            label="Código de usuário"
+            labelPlacement="floating"
+            required></ion-input>
+        }
 
       <span>Já possui uma conta?<a href="/login"> Entre</a></span>
 
-      <ion-button href="/menu">Cadastrar</ion-button>
+      <ion-button 
+      type="submit"
+      [disabled]="!formularioCadastro.valid">
+        Cadastrar
+      </ion-button>
     </form>
   </section>
 </ion-content>
