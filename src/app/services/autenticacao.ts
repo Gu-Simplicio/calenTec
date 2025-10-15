@@ -44,7 +44,7 @@ export class Autenticacao {
 
       //salva o novo array de usuários e 
       await this.storage.set(this.CHAVE_USUARIOS, usuarios);
-      await this.storage.set(this.CHAVE_USUARIO_LOGADO, usuario);
+      await this.storage.set(this.CHAVE_USUARIO_LOGADO, novoUsuario);
       return true;
     } catch(erro){
       console.error(`Erro no cadastro ${erro}`);
@@ -71,6 +71,30 @@ export class Autenticacao {
   //função de logout
   async logout(): Promise<void>{
     await this.storage.remove(this.CHAVE_USUARIO_LOGADO);
+  }
+
+  //apaga usuário do storage
+  async removerUsuario(): Promise<boolean>{
+    const usuarios = await this.getUsuarios();
+    const usuarioAtual = await this.getUsuarioAtual();
+
+    //caso tenha usuário logado
+    if(!usuarioAtual){
+      throw new Error("Não existe usuário logado para remover");
+    } else {
+      //filtra apenas os usuários com id diferente do usuarioAtual
+      const usuariosAtualizados = usuarios.filter(usuario => usuario.id !== usuarioAtual.id);
+
+      //checa se mudou o array de usuários
+      if(usuarios.length === usuariosAtualizados.length) throw new Error("Não tem usuário para ser removido");
+
+      //realiza logout
+      await this.logout();
+      //salva a nova lista de usuarios
+      await this.storage.set(this.CHAVE_USUARIOS, usuariosAtualizados);
+
+      return true;
+    }
   }
 
   //criptografar senha
