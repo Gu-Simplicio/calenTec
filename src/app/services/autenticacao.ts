@@ -13,7 +13,7 @@ export class Autenticacao {
   //chave usada para criptgrafar senhas
   private readonly CHAVE_CRIPTOGRAFIA = "chave-secreta-calentec";
 
-  constructor(private storage: Storage) { this.storage.create(); }
+  constructor(private storage: Storage) { this.storage.create();}
 
   //cadastrar usuário novo
   async cadastrar(usuario: Omit<Usuario, 'id'>): Promise<boolean>{
@@ -55,17 +55,30 @@ export class Autenticacao {
   //função de login
   async login(email: string, senha: string): Promise<Usuario | null>{
     //recebe os usuários salvos no storage
-    const usuarios = this.getUsuarios();
-    
+    const usuarios = await this.getUsuarios();
+
+    if(usuarios.length == 0) {
+      console.error("Sem nenhum usuário cadastrado para logar");
+      return null;
+    }
+
     //recebe o usuário com o e-mail inserido
-    const usuarioEscolhido = (await usuarios).find(u => u.email === email);
+    const usuarioEscolhido = await usuarios.find((u: Usuario) => u.email === email) || null;
+
+    //caso o usuário não exista
+    if(usuarioEscolhido == null) {
+      console.error("Usuário não existe!");
+      return null;
+    };
 
     //caso a senha esteja correta, o usuário fica logad
-    if(usuarioEscolhido && this.verificarSenha(senha, usuarioEscolhido?.senha)) {
+    if(usuarioEscolhido && this.verificarSenha(senha, usuarioEscolhido.senha)) {
       await this.storage.set(this.CHAVE_USUARIO_LOGADO, usuarioEscolhido);
       return usuarioEscolhido;
+    } else {
+      console.error("senha incorreta!");
+      return null;
     }
-    return null;
   }
 
   //função de logout
@@ -105,7 +118,7 @@ export class Autenticacao {
   //checa se a senha inserida está correta
   verificarSenha(senhaDigitada: string, senhaCriptografada: string): boolean {
     //descriptografa a senha salva anteriormente
-    const bytes = CryptoJS.AES.decrypt(senhaCriptografada, this.CHAVE_CRIPTOGRAFIA);
+    const bytes = Crypto.AES.decrypt(senhaCriptografada, this.CHAVE_CRIPTOGRAFIA);
     const senhaOriginal = bytes.toString(Crypto.enc.Utf8);
 
     //retorna se as senhas são iguais ou não
@@ -117,6 +130,8 @@ export class Autenticacao {
     return await this.storage.get(this.CHAVE_USUARIO_LOGADO);
   }
   private async getUsuarios(): Promise<Usuario[]>{
-    return await this.storage.get(this.CHAVE_USUARIOS) || [];
-  }
+    const usuarios =  await this.storage.get(this.CHAVE_USUARIOS) || [];
+    
+    return usuarios || [];
+  } 
 }
