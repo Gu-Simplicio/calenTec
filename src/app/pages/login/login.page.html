@@ -2,16 +2,18 @@
   <section class="secaoForm">
     <h1>Entrar</h1>
 
-    <form class="formulario">
+    <form #formularioLogin="ngForm" class="formulario">
       <ion-input 
         name="email"
-        type="text"
+        [(ngModel)]="usuario.email"
+        type="email"
         label="Insira seu E-mail"
         labelPlacement="floating"
         required></ion-input>
       
       <ion-input 
         name="senha"
+        [(ngModel)]="usuario.senha"
         type="password"
         label="Senha"
         labelPlacement="floating"
@@ -19,7 +21,9 @@
 
       <span>Não possuo uma conta?<a href="/cadastro"> Cadastre-se</a></span>
 
-      <ion-button href="/menu">Entrar</ion-button>
+      <ion-button
+        [disabled]="!formularioLogin.valid"
+        (click)="entrar()">Entrar</ion-button>
     </form>
   </section>
 </ion-content>
