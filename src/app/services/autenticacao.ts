@@ -108,6 +108,7 @@ export class Autenticacao {
     const bytes = CryptoJS.AES.decrypt(senhaCriptografada, this.CHAVE_CRIPTOGRAFIA);
     const senhaOriginal = bytes.toString(Crypto.enc.Utf8);
 
+    //retorna se as senhas são iguais ou não
     return senhaDigitada === senhaOriginal;
   }
 
