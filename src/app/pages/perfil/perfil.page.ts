@@ -17,10 +17,7 @@ export class PerfilPage implements OnInit {
     private router: Router
   ) { }
 
-  async ngOnInit() {
-    this.usuario = await this.autenticacao.getUsuarioAtual();
-    console.log(this.usuario);
-  }
+  async ngOnInit() { this.usuario = await this.autenticacao.getUsuarioAtual(); }
 
   sair(){
     //desloga o usuário
