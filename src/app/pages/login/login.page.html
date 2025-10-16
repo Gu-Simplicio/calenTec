@@ -1,6 +1,6 @@
-<ion-content>
+<ion-content color="light">
   <section class="secaoForm">
-    <h1>Entrar</h1>
+    <h1 class="letraVermelha">Entrar</h1>
 
     <form #formularioLogin="ngForm" class="formulario">
       <ion-input 
@@ -19,7 +19,7 @@
         labelPlacement="floating"
         required></ion-input>
 
-      <span>Não possuo uma conta?<a href="/cadastro" class="letraVermelha"> Cadastre-se</a></span>
+      <span>Não possui uma conta? <br> <a href="/cadastro" class="letraVermelha"> Cadastre-se</a></span>
 
       <ion-button
         [disabled]="!formularioLogin.valid"
