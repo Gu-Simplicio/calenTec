@@ -1,1 +1,10 @@
 #btn-sair{ color: var(--ion-color-vermelho) }
+
+#campoPerfil {
+    align-items: end;
+}
+
+#campoPerfil ion-grid {
+    gap: 1rem;
+    font-weight: bold;
+}

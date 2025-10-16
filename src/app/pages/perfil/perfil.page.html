@@ -1,25 +1,42 @@
-<ion-content>
-  @if(usuario){
-    <section>
-      <ion-item>
-        Nome: {{ usuario.nome }}
-      </ion-item>
-      @if(usuario.codigo){
-        <ion-item>
-          RM: {{ usuario.codigo }}
-        </ion-item>
-      }
-      <ion-item>
-        email: {{ usuario.email }}
-      </ion-item>
-      <ion-item>
-        tipo de usuário: {{ usuario.tipoUsuario }}
-      </ion-item>
-    </section>
+<ion-header>
+  <ion-toolbar color="light">
+    <a href="/menu">
+      <img 
+        src="assets/imgs/logoEtec.png" 
+        alt="Logo da ETEC"
+        width="100px">
+    </a>
+  </ion-toolbar>
+</ion-header>
 
-    <ion-button 
-      id="btn-sair"
-      fill="clear"
-      (click)="sair()">Sair</ion-button>
-  }
+<ion-content [fullscreen]="true" color="light"> 
+  <section class="secaoForm">
+    @if(usuario){
+      <section class="formulario" id="campoPerfil">
+        <ion-grid>
+          <ion-row>
+            Nome: {{ usuario.nome }}
+          </ion-row>
+          @if(usuario.codigo){
+            <ion-row>
+              RM: {{ usuario.codigo }}
+            </ion-row>
+          }
+          <ion-row>
+            email: {{ usuario.email }}
+          </ion-row>
+          <ion-row>
+            tipo de usuário: {{ usuario.tipoUsuario }}
+          </ion-row>
+        </ion-grid>
+
+        <ion-button 
+          id="btn-sair"
+          fill="clear"
+          (click)="sair()">Sair</ion-button>
+      </section>
+    }
+  </section>
 </ion-content>
+
+<app-footer></app-footer>

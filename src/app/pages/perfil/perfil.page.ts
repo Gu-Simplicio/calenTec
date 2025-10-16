@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';[]
 import { Usuario } from 'src/app/models/usuario';
 import { Autenticacao } from 'src/app/services/autenticacao';
 
@@ -14,7 +13,6 @@ export class PerfilPage implements OnInit {
 
   constructor(
     private autenticacao: Autenticacao,
-    private router: Router
   ) { }
 
   async ngOnInit() { this.usuario = await this.autenticacao.getUsuarioAtual(); }
