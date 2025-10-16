@@ -31,6 +31,8 @@
       <span>Não possui uma conta? <br> <a href="/cadastro" class="letraVermelha"> Cadastre-se</a></span>
 
       <ion-button
+        type="submit"
+        fill="clear"
         [disabled]="!formularioLogin.valid"
         (click)="entrar()">Entrar</ion-button>
     </form>
