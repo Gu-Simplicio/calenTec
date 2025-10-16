@@ -3,7 +3,13 @@
                     ion-justify-content-around">
     <h1>2025</h1>
 
+    @if(funcLogado){
+        <ion-button shape="round" color="light">
+            <ion-icon slot="icon-only" name="add" size="large"></ion-icon>
+        </ion-button>
+    }
+
     <a href="/perfil">
-        <ion-icon name="person-circle-outline" size="large"></ion-icon>
+        <ion-icon name="person-circle-outline" size="large" color="medium" style="transform: scale(1.5)"></ion-icon>
     </a>
 </ion-footer>
