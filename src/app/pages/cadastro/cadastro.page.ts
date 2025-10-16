@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { tipoUsuario, Usuario } from 'src/app/models/usuario';
-import { Autenticacao } from 'src/app/services/autenticacao';
+import { Autenticacao } from 'src/app/services/auth/autenticacao';
 
 @Component({
   selector: 'app-cadastro',
