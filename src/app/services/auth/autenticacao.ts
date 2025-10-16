@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import * as Crypto from 'crypto-js';
-import { Usuario, tipoUsuario } from '../models/usuario';
+import { Usuario, tipoUsuario } from '../../models/usuario';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
