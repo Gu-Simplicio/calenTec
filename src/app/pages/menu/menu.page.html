@@ -1,10 +1,13 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>menu</ion-title>
+<ion-header>
+  <ion-toolbar color="light">
+    <img 
+      src="assets/imgs/logoEtec.png" 
+      alt="Logo da ETEC"
+      width="100px">
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" color="light">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">menu</ion-title>
@@ -12,7 +15,7 @@
   </ion-header>
 </ion-content>
 
-@if(usuario && usuario.tipoUsuario == 'aluno'){
+@if(usuario && usuario.tipoUsuario == 'funcionário'){
   <app-footer [funcLogado]="true"></app-footer>
 } @else {
   <app-footer></app-footer>
