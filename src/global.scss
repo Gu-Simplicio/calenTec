@@ -36,6 +36,8 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+ion-button { color: #000; font-weight: bold; }
+
 //estilização geral
 .letraVermelha {
     color: var(--ion-color-carmin);
