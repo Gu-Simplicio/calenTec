@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { tipoUsuario, Usuario } from 'src/app/models/usuario';
 import { Autenticacao } from 'src/app/services/auth/autenticacao';
+import { MostrarToast } from 'src/app/services/toast/mostrar-toast';
 
 @Component({
   selector: 'app-cadastro',
@@ -28,7 +29,8 @@ export class CadastroPage implements OnInit {
 
   constructor(
     private autenticacao: Autenticacao,
-    private router: Router
+    private router: Router,
+    private mostrarToast: MostrarToast
   ) { 
     this.alteraTipo() 
   }
@@ -43,7 +45,10 @@ export class CadastroPage implements OnInit {
 
   async cadastrar(){
     //checa se o formulário é válido
-    if(!this.formularioCadastro.valid) throw new Error("Formulário incompleto!")
+    if(!this.formularioCadastro.valid) {
+      this.mostrarToast.exibir("Campos inválidos!")
+      throw new Error("Campos inválidos!");
+    }
     
     //realiza o cadastro do usuário
     const usuarioCadastrado = await this.autenticacao.cadastrar(this.usuario);
@@ -51,6 +56,7 @@ export class CadastroPage implements OnInit {
     if(usuarioCadastrado) {
       this.router.navigate(['/menu']);
     } else {
+      this.mostrarToast.exibir("Erro ao cadastrar!");
       throw new Error("Erro ao cadastrar usuário!");
     }
   }

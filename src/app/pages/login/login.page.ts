@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Autenticacao } from 'src/app/services/auth/autenticacao';
+import { MostrarToast } from 'src/app/services/toast/mostrar-toast';
 
 @Component({
   selector: 'app-login',
@@ -20,14 +21,18 @@ export class LoginPage implements OnInit {
 
   constructor(
     private autenticacao: Autenticacao,
-    private router: Router
+    private router: Router,
+    private mostrarToast: MostrarToast
   ) { }
 
   ngOnInit() {
   }
 
   async entrar(){
-    if(!this.formularioLogin.valid) throw new Error("Formulário inválido!!");
+    if(!this.formularioLogin.valid) {
+      this.mostrarToast.exibir("Campos preenchidos errado!")
+      throw new Error("Formulário inválido!!");
+    }
 
     try {
       const usuarioLogado = await this.autenticacao.login(this.usuario.email, this.usuario.senha)
@@ -36,10 +41,12 @@ export class LoginPage implements OnInit {
       if(usuarioLogado){
         this.router.navigate(['/menu']);
       } else {
+        this.mostrarToast.exibir("Erro ao cadastrar");  
         throw new Error("Erro ao entrar");
       }
     }catch(erro){
-      console.log(erro)
+      this.mostrarToast.exibir("erro ao logar!");
+      console.error(erro);
     }
   }
 }
