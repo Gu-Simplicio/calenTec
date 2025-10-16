@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import * as Crypto from 'crypto-js';
 import { Usuario, tipoUsuario } from '../models/usuario';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,11 @@ export class Autenticacao {
   //chave usada para criptgrafar senhas
   private readonly CHAVE_CRIPTOGRAFIA = "chave-secreta-calentec";
 
-  constructor(private storage: Storage) { this.storage.create();}
+  constructor(
+    private storage: Storage,
+    private router: Router,
+    private alertController: AlertController
+  ) { this.storage.create();}
 
   //cadastrar usuário novo
   async cadastrar(usuario: Omit<Usuario, 'id'>): Promise<boolean>{
@@ -83,8 +89,27 @@ export class Autenticacao {
 
   //função de logout
   async logout(): Promise<void>{
-    await this.storage.remove(this.CHAVE_USUARIO_LOGADO);
-  }
+    const alert = await this.alertController.create({
+      header: "Confirmação",
+      message: "Tem certeza que você deseja sair?",
+      buttons: [
+        {
+          text: "Cancelar",
+          role: 'cancel'
+        },
+        {
+          text: 'Sair da conta',
+          handler: async () => {
+            await this.storage.remove(this.CHAVE_USUARIO_LOGADO);
+            this.router.navigate(['/login'])
+            
+          }
+        }
+      ]
+    });
+
+    alert.present();
+}
 
   //apaga usuário do storage
   async removerUsuario(): Promise<boolean>{
