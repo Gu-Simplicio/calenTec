@@ -16,7 +16,6 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    FullCalendarModule, // Importe o módulo do FullCalendar aqui
     IonicStorageModule.forRoot({name: "calentec"}),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
