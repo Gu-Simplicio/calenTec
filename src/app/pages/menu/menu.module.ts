@@ -8,14 +8,15 @@ import { MenuPageRoutingModule } from './menu-routing.module';
 
 import { MenuPage } from './menu.page';
 import { FooterComponent } from 'src/app/components/footer/footer.component';
-
+import { CalendarioComponentModule } from 'src/app/components/calendario/calendario.component.module';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     MenuPageRoutingModule,
-    FooterComponent
+    FooterComponent,
+    CalendarioComponentModule
   ],
   declarations: [MenuPage]
 })
