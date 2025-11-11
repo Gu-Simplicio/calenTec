@@ -9,9 +9,9 @@
 
 <ion-content [fullscreen]="true" color="light">
   @for(mes of mesesDoAno; track mes){
-    <app-calendario [dataInicial]="mes" ></app-calendario>
-
-    <ion-item-divider></ion-item-divider>
+    <div class="ion-margin-vertical ion-padding-vertical">
+      <app-calendario [dataInicial]="mes" ></app-calendario>
+    </div>
   }
 </ion-content>
 
