@@ -8,7 +8,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color="light">
-  <app-calendario></app-calendario>
+  @for(mes of mesesDoAno; track mes){
+    <app-calendario [dataInicial]="mes" ></app-calendario>
+
+    <ion-item-divider></ion-item-divider>
+  }
 </ion-content>
 
 @if(usuario && usuario.tipoUsuario == 'funcionário'){
