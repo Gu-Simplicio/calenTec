@@ -10,7 +10,11 @@
 <ion-content [fullscreen]="true" color="light">
   @for(mes of mesesDoAno; track mes){
     <div class="ion-margin-vertical ion-padding-vertical">
-      <app-calendario [dataInicial]="mes" ></app-calendario>
+      @if(usuario?.tipoUsuario != 'funcionário') {
+        <app-calendario [dataInicial]="mes"></app-calendario>
+      } @else {
+        <app-calendario [dataInicial]="mes" [ehFuncionario]="true"></app-calendario>
+      }
     </div>
   }
 </ion-content>
