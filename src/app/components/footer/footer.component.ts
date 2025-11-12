@@ -8,8 +8,6 @@ import { IonicModule } from '@ionic/angular';
   imports: [IonicModule]
 })
 export class FooterComponent  implements OnInit {
-  @Input() funcLogado?: boolean;
-
   constructor() { }
 
   ngOnInit() {}
