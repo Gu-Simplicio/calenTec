@@ -29,12 +29,16 @@ export class CalendarioComponent  implements OnInit {
   // recebe o componente do fullcalendar
   @ViewChild('calendario') componenteCalendario!: FullCalendarComponent;
 
+  // nome do mês exibido
+  nomeDoMes: string = '';
+
   //configura as opções do calendário
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, interactionPlugin],
     locale: ptBrLocale,
-    headerToolbar: { left: '', center: 'title', right: '' },
+    headerToolbar: { left: '', center: '', right: '' },
+    dayHeaderFormat: { weekday: 'narrow' },
     navLinks: false,
     selectable: false,
     editable: false,
@@ -52,6 +56,9 @@ export class CalendarioComponent  implements OnInit {
   ngOnInit() {
     // seta a data inicial
     this.calendarOptions.initialDate = this.dataInicial;
+
+    //salva o nome do mês
+    this.nomeDoMes = this.dataInicial.toLocaleDateString('pt-Br', { month: 'long' })
 
     // caso seja um funcionário, atualiza os dados do calendário para um CRUD
     if (this.ehFuncionario === true) {
