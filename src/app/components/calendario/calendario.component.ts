@@ -107,7 +107,7 @@ export class CalendarioComponent  implements OnInit {
    * UPDATE: Emite o evento atualizado para o pai
    */
   async editarEvento(event: EventApi) {
-    const horaAtual = new Date().toString().split(' ')[4].substring(0, 5);
+    const horaAtual = event.start ? event.start.toTimeString().split(' ')[0].substring(0, 5) : '00:00';
 
     const alert = await this.alertController.create({
       header: 'Editar Evento',

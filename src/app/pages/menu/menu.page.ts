@@ -79,6 +79,6 @@ export class MenuPage implements OnInit {
     //filtra os eventos, removendo o evento do id correspondente
     this.todosOsEventos = this.todosOsEventos.filter(e => e.id !== id);
 
-    this.salvarEventosNoStorage();
+    await this.salvarEventosNoStorage();
   }
 }

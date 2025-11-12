@@ -11,7 +11,9 @@
   @for(mes of mesesDoAno; track mes){
     <div class="ion-margin-vertical ion-padding-vertical">
       @if(usuario?.tipoUsuario != 'funcionário') {
-        <app-calendario [dataInicial]="mes"></app-calendario>
+        <app-calendario 
+          [dataInicial]="mes"
+          [eventos]="todosOsEventos"></app-calendario>
       } @else {
         <app-calendario 
           [dataInicial]="mes" 
