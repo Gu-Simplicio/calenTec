@@ -5,6 +5,23 @@
 }
 
 #campoPerfil ion-grid {
-    gap: 1rem;
+    gap: 2rem;
+    display: grid;
     font-weight: bold;
+    font-size: 1.25rem;
+    overflow-wrap:anywhere;
+}
+
+#campoPerfil ion-grid ion-row {
+    gap: .5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#campoPerfil ion-grid ion-row span {
+    padding: .5rem;
+    border-radius: 5px;
+    color: var(--ion-color-light);
+    background-color: var(--ion-color-carmin);
 }

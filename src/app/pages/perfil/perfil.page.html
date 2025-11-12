@@ -15,18 +15,22 @@
       <section class="formulario" id="campoPerfil">
         <ion-grid>
           <ion-row>
-            Nome: {{ usuario.nome }}
+            <span>Nome:</span>
+             {{ usuario.nome }}
           </ion-row>
           @if(usuario.codigo){
             <ion-row>
-              RM: {{ usuario.codigo }}
+              <span>RM:</span>
+              {{ usuario.codigo }}
             </ion-row>
           }
           <ion-row>
-            email: {{ usuario.email }}
+            <span>email:</span>
+            {{ usuario.email }}
           </ion-row>
           <ion-row>
-            tipo de usuário: {{ usuario.tipoUsuario }}
+            <span>tipo de usuário:</span>
+            {{ usuario.tipoUsuario }}
           </ion-row>
         </ion-grid>
 
