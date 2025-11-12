@@ -4,7 +4,6 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 import { AlertController } from '@ionic/angular';
-import { Eventos } from 'src/app/services/eventos/eventos';
 import { EventoCalendario } from 'src/app/models/EventoCalendario';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 
@@ -42,8 +41,7 @@ export class CalendarioComponent  implements OnInit {
       meridiem: false,
       hour12: false 
     },
-    displayEventTime: true,
-    events: [] // Será preenchido pelo Input
+    displayEventTime: true
   };
 
   // 6. REMOVER O EventosService DO CONSTRUTOR
@@ -51,9 +49,6 @@ export class CalendarioComponent  implements OnInit {
 
   ngOnInit() {
     this.calendarOptions.initialDate = this.dataInicial;
-    
-    // 7. USAR O INPUT PARA POPULAR OS EVENTOS
-    this.calendarOptions.events = this.eventos;
 
     if (this.ehFuncionario === true) {
       this.calendarOptions.selectable = true;
