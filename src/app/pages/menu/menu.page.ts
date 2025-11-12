@@ -58,20 +58,19 @@ export class MenuPage implements OnInit {
   
   // chamado quando o calendário emite 'eventoAdicionado'
   async onEventoAdicionado(evento: EventoCalendario){
-    this.todosOsEventos.push(evento);
+    // cria um array novo com um elemento a mais, pra garantir que o Angular vai alterar na memória
+    this.todosOsEventos = [...this.todosOsEventos, evento];
     await this.salvarEventosNoStorage();
   }
 
   // chamado quando o calendário emite 'eventoAtualizado
   async onEventoAtualizado(evento: EventoCalendario){
-    // pega o index do evento
-    const index = this.todosOsEventos.findIndex( e => e.id === evento.id);
+    // atualiza os eventos com map pra criar um array novo e garantir que o Angular salve direito
+    this.todosOsEventos = this.todosOsEventos.map(e => 
+      e.id === evento.id ? evento : e
+    ); 
 
-    // caso o index exista, atualiza o evento correspondente
-    if( index > -1 ){
-      this.todosOsEventos[index] = evento;
-      await this.salvarEventosNoStorage();
-    }
+    await this.salvarEventosNoStorage();
   }
 
   // chamado quando o calendário emiter 'eventoRemovido'
