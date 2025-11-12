@@ -50,12 +50,36 @@ export class CalendarioComponent  implements OnInit {
   ngOnInit() {
     this.calendarOptions.initialDate = this.dataInicial;
 
+    // caso seja um funcionário, atualiza os dados do calendário para um CRUD
     if (this.ehFuncionario === true) {
       this.calendarOptions.selectable = true;
       this.calendarOptions.editable = true;
       this.calendarOptions.dateClick = this.handleDateClick.bind(this);
       this.calendarOptions.eventClick = this.handleEventClick.bind(this);
+    } else { // caso seja um aluno, atualiza o calendário para exibir os dados do evento quando clicado
+      this.calendarOptions.selectable = false; //não permite selecionar dias vagos
+      this.calendarOptions.eventClick = this.handleEventClickAluno.bind(this);// permite clicar em um evento existente para exibir detalhes
     }
+  }
+
+  async handleEventClickAluno(arg: EventClickArg){
+    // pega a hora do evento e formata (HH:mm)
+    const horaEvento = arg.event.start
+    ? arg.event.start.toTimeString().split(' ')[0].substring(0, 5) //caso tenha informado o horário
+    : 'Horário não definido!' //caso não tenha
+
+    const alert = await this.alertController.create({
+      header: arg.event.title, // o título do evento fica na parte de cima do modal
+      message: `Horário do evento: ${horaEvento}`,
+      buttons: [
+        {
+          text: 'Fechar',
+          role: 'cancel' //botão para fechar o modal
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   // --- LÓGICA DO CRUD (AGORA EMITINDO EVENTOS) ---
