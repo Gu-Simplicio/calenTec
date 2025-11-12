@@ -1,37 +1,32 @@
-// src/app/components/calendario/calendario.component.ts
-
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { CalendarOptions, EventApi, EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
-import interactionPlugin from '@fullcalendar/interaction';
 import { AlertController } from '@ionic/angular';
-import { DateClickArg } from '@fullcalendar/interaction';
-import { EventClickArg, EventApi } from '@fullcalendar/core';
-
-// 1. IMPORTAR FULLCALENDARCOMPONENT E VIEWCHILD
-import { FullCalendarComponent } from '@fullcalendar/angular';
+import { Eventos } from 'src/app/services/eventos/eventos';
 import { EventoCalendario } from 'src/app/models/EventoCalendario';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
 @Component({
   selector: 'app-calendario',
+  standalone: false,
   templateUrl: './calendario.component.html',
   styleUrls: ['./calendario.component.scss'],
 })
 export class CalendarioComponent  implements OnInit {
-  //recebe a data inicial do mês e o tipo de usuário
   @Input() dataInicial: Date = new Date();
-  @Input() tipoUsuario: string | undefined | null;
-  // recebe a lista de eventos salvos através do menu
+  @Input() ehFuncionario: boolean | undefined | null;
+  // 3. RECEBER A LISTA DE EVENTOS DO PAI
   @Input() eventos: EventoCalendario[] = [];
 
-  // emite os eventos que ocorrerem
+  // 4. EMITIR MUDANÇAS PARA O PAI
   @Output() eventoAdicionado = new EventEmitter<EventoCalendario>();
   @Output() eventoAtualizado = new EventEmitter<EventoCalendario>();
   @Output() eventoRemovido = new EventEmitter<string>(); // Emite o ID
 
-  // recebe o componente do fullcalendar
-  @ViewChild('calendario') componenteCalendario!: FullCalendarComponent
+  // 5. REFERÊNCIA AO CALENDÁRIO
+  @ViewChild('calendario') componenteCalendario!: FullCalendarComponent;
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -51,15 +46,16 @@ export class CalendarioComponent  implements OnInit {
     events: [] // Será preenchido pelo Input
   };
 
+  // 6. REMOVER O EventosService DO CONSTRUTOR
   constructor(private alertController: AlertController) { }
 
   ngOnInit() {
     this.calendarOptions.initialDate = this.dataInicial;
     
-    // insere os eventos do input no calendário
+    // 7. USAR O INPUT PARA POPULAR OS EVENTOS
     this.calendarOptions.events = this.eventos;
 
-    if (this.tipoUsuario === 'funcionário') {
+    if (this.ehFuncionario === true) {
       this.calendarOptions.selectable = true;
       this.calendarOptions.editable = true;
       this.calendarOptions.dateClick = this.handleDateClick.bind(this);
@@ -67,7 +63,11 @@ export class CalendarioComponent  implements OnInit {
     }
   }
 
-  // emite o evento pro componente pai
+  // --- LÓGICA DO CRUD (AGORA EMITINDO EVENTOS) ---
+
+  /**
+   * CREATE: Emite o evento para o pai
+   */
   async handleDateClick(arg: DateClickArg) {
     const alert = await this.alertController.create({
       header: 'Novo Evento',
@@ -93,7 +93,7 @@ export class CalendarioComponent  implements OnInit {
               // Adiciona na UI local
               arg.view.calendar.addEvent(novoEvento);
               
-              // emite o evento para o componente pai salvar
+              // 8. EMITIR O NOVO EVENTO PARA O PAI SALVAR
               this.eventoAdicionado.emit(novoEvento);
             }
           }
@@ -103,9 +103,11 @@ export class CalendarioComponent  implements OnInit {
     await alert.present();
   }
 
-  // emite o evento de atualização pro componente pai
+  /**
+   * UPDATE: Emite o evento atualizado para o pai
+   */
   async editarEvento(event: EventApi) {
-    const horaAtual = new Date().toString().split(' ')[0].substring(0, 5);
+    const horaAtual = new Date().toString().split(' ')[4].substring(0, 5);
 
     const alert = await this.alertController.create({
       header: 'Editar Evento',
@@ -127,7 +129,7 @@ export class CalendarioComponent  implements OnInit {
               event.setStart(novoStartISO);
               event.setProp('allDay', false);
               
-              // emitindo o evento de atualização
+              // 9. EMITIR O EVENTO ATUALIZADO PARA O PAI
               const eventoAtualizado: EventoCalendario = {
                 id: event.id,
                 title: data.titulo,
@@ -143,7 +145,9 @@ export class CalendarioComponent  implements OnInit {
     await alert.present();
   }
 
-  // emite o id que deve ser removido
+  /**
+   * DELETE: Emite o ID do evento para o pai
+   */
   async confirmarRemocao(event: EventApi) {
     const alert = await this.alertController.create({
       header: 'Confirmar Remoção',
@@ -156,7 +160,7 @@ export class CalendarioComponent  implements OnInit {
             const idParaRemover = event.id;
             event.remove(); // Remove da UI local
 
-            // emite o id aqui
+            // 10. EMITIR O ID PARA O PAI REMOVER DO STORAGE
             this.eventoRemovido.emit(idParaRemover);
           }
         }
@@ -165,7 +169,7 @@ export class CalendarioComponent  implements OnInit {
     await alert.present();
   }
 
-  // pergunta para o usuário o que ele quer fazer com o calendário
+  // A função handleEventClick não muda
   async handleEventClick(arg: EventClickArg) {
     const alert = await this.alertController.create({
       header: 'O que deseja fazer?',
