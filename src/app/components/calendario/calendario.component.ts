@@ -48,7 +48,9 @@ export class CalendarioComponent  implements OnInit {
       meridiem: false,
       hour12: false 
     },
-    displayEventTime: true
+    displayEventTime: true,
+    contentHeight: 'auto',
+    aspectRatio: 2,
   };
 
   constructor(private alertController: AlertController) { }
