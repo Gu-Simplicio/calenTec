@@ -1,8 +1,8 @@
 :host h1 {
     font-weight: 300;
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     margin-left: 10px;
-    margin-bottom: 0;
+    margin-bottom: .5rem;
     text-transform: capitalize; // faz a primeira letra ser maiúscula
     color: var(--ion-color-cinza-claro);
 }
@@ -27,6 +27,12 @@
         padding-top: 5px;
         margin-bottom: 5px;
         border-top: 1px solid var(--ion-color-cinza-claro);
+    }
+
+    // caixa onde os dias ficam
+    .fc-daygrid-day-frame {
+        max-height: 3rem;
+        min-height: auto !important;
     }
 
     // números dos dias
